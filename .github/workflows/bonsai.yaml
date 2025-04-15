@@ -1,4 +1,4 @@
-name: Bonsai Deploy
+name: bonsai
 
 on:
   workflow_run:
