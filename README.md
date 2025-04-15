@@ -1,7 +1,7 @@
 # Sensu Google Chat Handler
 
 [![Sensu Bonsai Asset](https://img.shields.io/badge/Bonsai-Download%20Me-brightgreen.svg?colorB=89C967&logo=sensu)](https://bonsai.sensu.io/assets/grant-singleton-nz/sensu-simple-google-chat-handler)
-[![Go Test](https://github.com/grant-singleton-nz/sensu-simple-google-chat-handler/workflows/Go%20Test/badge.svg)](https://github.com/grant-singleton-nz/sensu-simple-google-chat-handler/actions?query=workflow%3A%22Go+Test%22)
+[![Go Test](https://github.com/grant-singleton-nz/sensu-simple-google-chat-handler/workflows/test/badge.svg)](https://github.com/grant-singleton-nz/sensu-simple-google-chat-handler/actions?query=workflow%3A%22test%22)
 [![goreleaser](https://github.com/grant-singleton-nz/sensu-simple-google-chat-handler/workflows/goreleaser/badge.svg)](https://github.com/grant-singleton-nz/sensu-simple-google-chat-handler/actions?query=workflow%3Agoreleaser)
 
 ## Table of Contents

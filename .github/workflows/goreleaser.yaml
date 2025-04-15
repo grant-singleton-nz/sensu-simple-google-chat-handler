@@ -26,10 +26,3 @@ jobs:
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Register Bonsai asset
-        uses: sensu/bonsai-asset-action@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BONSAI_API_KEY: ${{ secrets.BONSAI_API_KEY }}
-          BONSAI_REPO: grant-singleton-nz/sensu-simple-google-chat-handler
