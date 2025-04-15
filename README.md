@@ -1,8 +1,8 @@
 # Sensu Google Chat Handler
 
-[![Sensu Bonsai Asset](https://img.shields.io/badge/Bonsai-Download%20Me-brightgreen.svg?colorB=89C967&logo=sensu)](https://bonsai.sensu.io/assets/yourusername/sensu-google-chat-handler)
-[![Go Test](https://github.com/yourusername/sensu-google-chat-handler/workflows/Go%20Test/badge.svg)](https://github.com/yourusername/sensu-google-chat-handler/actions?query=workflow%3A%22Go+Test%22)
-[![goreleaser](https://github.com/yourusername/sensu-google-chat-handler/workflows/goreleaser/badge.svg)](https://github.com/yourusername/sensu-google-chat-handler/actions?query=workflow%3Agoreleaser)
+[![Sensu Bonsai Asset](https://img.shields.io/badge/Bonsai-Download%20Me-brightgreen.svg?colorB=89C967&logo=sensu)](https://bonsai.sensu.io/assets/grant-singleton-nz/sensu-google-chat-handler)
+[![Go Test](https://github.com/grant-singleton-nz/sensu-google-chat-handler/workflows/Go%20Test/badge.svg)](https://github.com/grant-singleton-nz/sensu-google-chat-handler/actions?query=workflow%3A%22Go+Test%22)
+[![goreleaser](https://github.com/grant-singleton-nz/sensu-google-chat-handler/workflows/goreleaser/badge.svg)](https://github.com/grant-singleton-nz/sensu-google-chat-handler/actions?query=workflow%3Agoreleaser)
 
 ## Table of Contents
 - [Overview](#overview)
@@ -59,7 +59,7 @@ Use "sensu-google-chat-handler [command] --help" for more information about a co
 consider doing so! You can use the following command to add the asset:
 
 ```
-sensuctl asset add yourusername/sensu-google-chat-handler
+sensuctl asset add grant-singleton-nz/sensu-google-chat-handler
 ```
 
 You can also find the asset on the [Bonsai Asset Index][3].
@@ -77,7 +77,7 @@ spec:
   command: sensu-google-chat-handler --webhook $GOOGLE_CHAT_WEBHOOK --dashboard $SENSU_DASHBOARD
   type: pipe
   runtime_assets:
-    - yourusername/sensu-google-chat-handler
+    - grant-singleton-nz/sensu-google-chat-handler
   secrets:
     - name: GOOGLE_CHAT_WEBHOOK
       secret: google-chat-webhook
@@ -102,7 +102,7 @@ or create an executable from this source.
 For Linux systems with `go` installed:
 
 ```shell
-go install github.com/yourusername/sensu-google-chat-handler@latest
+go install github.com/grant-singleton-nz/sensu-google-chat-handler@latest
 ```
 
 ## Contributing
@@ -111,5 +111,5 @@ For more information about contributing to this plugin, see [Contributing][1].
 
 [1]: https://docs.sensu.io/sensu-go/latest/reference/handlers/
 [2]: https://docs.sensu.io/sensu-go/latest/reference/assets/
-[3]: https://bonsai.sensu.io/assets/yourusername/sensu-google-chat-handler
-[4]: https://github.com/yourusername/sensu-google-chat-handler/releases
+[3]: https://bonsai.sensu.io/assets/grant-singleton-nz/sensu-google-chat-handler
+[4]: https://github.com/grant-singleton-nz/sensu-google-chat-handler/releases
