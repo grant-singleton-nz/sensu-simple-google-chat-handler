@@ -1,8 +1,8 @@
 # Sensu Google Chat Handler
 
-[![Sensu Bonsai Asset](https://img.shields.io/badge/Bonsai-Download%20Me-brightgreen.svg?colorB=89C967&logo=sensu)](https://bonsai.sensu.io/assets/grant-singleton-nz/sensu-google-chat-handler)
-[![Go Test](https://github.com/grant-singleton-nz/sensu-google-chat-handler/workflows/Go%20Test/badge.svg)](https://github.com/grant-singleton-nz/sensu-google-chat-handler/actions?query=workflow%3A%22Go+Test%22)
-[![goreleaser](https://github.com/grant-singleton-nz/sensu-google-chat-handler/workflows/goreleaser/badge.svg)](https://github.com/grant-singleton-nz/sensu-google-chat-handler/actions?query=workflow%3Agoreleaser)
+[![Sensu Bonsai Asset](https://img.shields.io/badge/Bonsai-Download%20Me-brightgreen.svg?colorB=89C967&logo=sensu)](https://bonsai.sensu.io/assets/grant-singleton-nz/sensu-simple-google-chat-handler)
+[![Go Test](https://github.com/grant-singleton-nz/sensu-simple-google-chat-handler/workflows/Go%20Test/badge.svg)](https://github.com/grant-singleton-nz/sensu-simple-google-chat-handler/actions?query=workflow%3A%22Go+Test%22)
+[![goreleaser](https://github.com/grant-singleton-nz/sensu-simple-google-chat-handler/workflows/goreleaser/badge.svg)](https://github.com/grant-singleton-nz/sensu-simple-google-chat-handler/actions?query=workflow%3Agoreleaser)
 
 ## Table of Contents
 - [Overview](#overview)
@@ -36,8 +36,8 @@ and organize messages by entity in Google Chat threads.
 The Sensu Google Chat Handler is a Sensu Handler that sends alert notifications to Google Chat
 
 Usage:
-  sensu-google-chat-handler [flags]
-  sensu-google-chat-handler [command]
+  sensu-simple-google-chat-handler [flags]
+  sensu-simple-google-chat-handler [command]
 
 Available Commands:
   help        Help about any command
@@ -45,10 +45,10 @@ Available Commands:
 
 Flags:
   -d, --dashboard string   URL prefix to dashboard with namespace
-  -h, --help               help for sensu-google-chat-handler
+  -h, --help               help for sensu-simple-google-chat-handler
   -w, --webhook string     The webhook URL to post the message to
 
-Use "sensu-google-chat-handler [command] --help" for more information about a command.
+Use "sensu-simple-google-chat-handler [command] --help" for more information about a command.
 ```
 
 ## Configuration
@@ -59,7 +59,7 @@ Use "sensu-google-chat-handler [command] --help" for more information about a co
 consider doing so! You can use the following command to add the asset:
 
 ```
-sensuctl asset add grant-singleton-nz/sensu-google-chat-handler
+sensuctl asset add grant-singleton-nz/sensu-simple-google-chat-handler
 ```
 
 You can also find the asset on the [Bonsai Asset Index][3].
@@ -74,10 +74,10 @@ metadata:
   name: google-chat
   namespace: default
 spec:
-  command: sensu-google-chat-handler --webhook $GOOGLE_CHAT_WEBHOOK --dashboard $SENSU_DASHBOARD
+  command: sensu-simple-google-chat-handler --webhook $GOOGLE_CHAT_WEBHOOK --dashboard $SENSU_DASHBOARD
   type: pipe
   runtime_assets:
-    - grant-singleton-nz/sensu-google-chat-handler
+    - grant-singleton-nz/sensu-simple-google-chat-handler
   secrets:
     - name: GOOGLE_CHAT_WEBHOOK
       secret: google-chat-webhook
@@ -96,13 +96,13 @@ spec:
 
 ### Download
 
-Download the latest version of the sensu-google-chat-handler from [releases][4],
+Download the latest version of the sensu-simple-google-chat-handler from [releases][4],
 or create an executable from this source.
 
 For Linux systems with `go` installed:
 
 ```shell
-go install github.com/grant-singleton-nz/sensu-google-chat-handler@latest
+go install github.com/grant-singleton-nz/sensu-simple-google-chat-handler@latest
 ```
 
 ## Contributing
@@ -111,5 +111,5 @@ For more information about contributing to this plugin, see [Contributing][1].
 
 [1]: https://docs.sensu.io/sensu-go/latest/reference/handlers/
 [2]: https://docs.sensu.io/sensu-go/latest/reference/assets/
-[3]: https://bonsai.sensu.io/assets/grant-singleton-nz/sensu-google-chat-handler
-[4]: https://github.com/grant-singleton-nz/sensu-google-chat-handler/releases
+[3]: https://bonsai.sensu.io/assets/grant-singleton-nz/sensu-simple-google-chat-handler
+[4]: https://github.com/grant-singleton-nz/sensu-simple-google-chat-handler/releases

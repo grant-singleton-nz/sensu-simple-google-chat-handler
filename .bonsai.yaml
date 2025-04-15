@@ -3,24 +3,24 @@ description: "Sensu Google Chat Handler"
 builds:
   - platform: "linux"
     arch: "amd64"
-    asset_filename: "sensu-google-chat-handler_{{ .Version }}_linux_amd64.tar.gz"
-    sha_filename: "sensu-google-chat-handler_{{ .Version }}_sha512-checksums.txt"
+    asset_filename: "sensu-simple-google-chat-handler_{{ .Version }}_linux_amd64.tar.gz"
+    sha_filename: "sensu-simple-google-chat-handler_{{ .Version }}_sha512-checksums.txt"
     filter:
       - "entity.system.os == 'linux'"
       - "entity.system.arch == 'amd64'"
 
   - platform: "linux"
     arch: "arm64"
-    asset_filename: "sensu-google-chat-handler_{{ .Version }}_linux_arm64.tar.gz"
-    sha_filename: "sensu-google-chat-handler_{{ .Version }}_sha512-checksums.txt"
+    asset_filename: "sensu-simple-google-chat-handler_{{ .Version }}_linux_arm64.tar.gz"
+    sha_filename: "sensu-simple-google-chat-handler_{{ .Version }}_sha512-checksums.txt"
     filter:
       - "entity.system.os == 'linux'"
       - "entity.system.arch == 'arm64'"
 
   - platform: "linux"
     arch: "armv7"
-    asset_filename: "sensu-google-chat-handler_{{ .Version }}_linux_armv7.tar.gz"
-    sha_filename: "sensu-google-chat-handler_{{ .Version }}_sha512-checksums.txt"
+    asset_filename: "sensu-simple-google-chat-handler_{{ .Version }}_linux_armv7.tar.gz"
+    sha_filename: "sensu-simple-google-chat-handler_{{ .Version }}_sha512-checksums.txt"
     filter:
       - "entity.system.os == 'linux'"
       - "entity.system.arch == 'arm'"
@@ -28,8 +28,8 @@ builds:
 
   - platform: "linux"
     arch: "armv6"
-    asset_filename: "sensu-google-chat-handler_{{ .Version }}_linux_armv6.tar.gz"
-    sha_filename: "sensu-google-chat-handler_{{ .Version }}_sha512-checksums.txt"
+    asset_filename: "sensu-simple-google-chat-handler_{{ .Version }}_linux_armv6.tar.gz"
+    sha_filename: "sensu-simple-google-chat-handler_{{ .Version }}_sha512-checksums.txt"
     filter:
       - "entity.system.os == 'linux'"
       - "entity.system.arch == 'arm'"
@@ -37,8 +37,8 @@ builds:
 
   - platform: "linux"
     arch: "armv5"
-    asset_filename: "sensu-google-chat-handler_{{ .Version }}_linux_armv5.tar.gz"
-    sha_filename: "sensu-google-chat-handler_{{ .Version }}_sha512-checksums.txt"
+    asset_filename: "sensu-simple-google-chat-handler_{{ .Version }}_linux_armv5.tar.gz"
+    sha_filename: "sensu-simple-google-chat-handler_{{ .Version }}_sha512-checksums.txt"
     filter:
       - "entity.system.os == 'linux'"
       - "entity.system.arch == 'arm'"
@@ -46,24 +46,24 @@ builds:
 
   - platform: "darwin"
     arch: "amd64"
-    asset_filename: "sensu-google-chat-handler_{{ .Version }}_darwin_amd64.tar.gz"
-    sha_filename: "sensu-google-chat-handler_{{ .Version }}_sha512-checksums.txt"
+    asset_filename: "sensu-simple-google-chat-handler_{{ .Version }}_darwin_amd64.tar.gz"
+    sha_filename: "sensu-simple-google-chat-handler_{{ .Version }}_sha512-checksums.txt"
     filter:
       - "entity.system.os == 'darwin'"
       - "entity.system.arch == 'amd64'"
 
   - platform: "darwin"
     arch: "arm64"
-    asset_filename: "sensu-google-chat-handler_{{ .Version }}_darwin_arm64.tar.gz"
-    sha_filename: "sensu-google-chat-handler_{{ .Version }}_sha512-checksums.txt"
+    asset_filename: "sensu-simple-google-chat-handler_{{ .Version }}_darwin_arm64.tar.gz"
+    sha_filename: "sensu-simple-google-chat-handler_{{ .Version }}_sha512-checksums.txt"
     filter:
       - "entity.system.os == 'darwin'"
       - "entity.system.arch == 'arm64'"
 
   - platform: "windows"
     arch: "amd64"
-    asset_filename: "sensu-google-chat-handler_{{ .Version }}_windows_amd64.tar.gz"
-    sha_filename: "sensu-google-chat-handler_{{ .Version }}_sha512-checksums.txt"
+    asset_filename: "sensu-simple-google-chat-handler_{{ .Version }}_windows_amd64.tar.gz"
+    sha_filename: "sensu-simple-google-chat-handler_{{ .Version }}_sha512-checksums.txt"
     filter:
       - "entity.system.os == 'windows'"
       - "entity.system.arch == 'amd64'"

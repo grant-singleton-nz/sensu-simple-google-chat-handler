@@ -23,7 +23,7 @@ type HandlerConfig struct {
 var (
 	config = HandlerConfig{
 		PluginConfig: sensu.PluginConfig{
-			Name:     "sensu-google-chat-handler",
+			Name:     "sensu-simple-google-chat-handler",
 			Short:    "Sensu Google Chat Handler",
 			Keyspace: "sensu.io/plugins/google-chat/config",
 		},

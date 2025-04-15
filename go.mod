@@ -1,4 +1,4 @@
-module github.com/grant-singleton-nz/sensu-google-chat-handler
+module github.com/grant-singleton-nz/sensu-simple-google-chat-handler
 
 go 1.24
 
