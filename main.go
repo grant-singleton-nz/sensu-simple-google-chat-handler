@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/url"
 	"path"
 	"strings"
 	"time"
@@ -95,16 +96,18 @@ func executeHandler(event *corev2.Event) error {
 		statusStr = statusStrings[status]
 	}
 
-	// Construct the dashboard URL by joining elements and ensuring no double slashes
-	parts := []string{strings.TrimRight(config.dashboard, "/"), namespace, "events", entity, checkName}
-	eventURL := ""
-	for i, part := range parts {
-		if i == 0 {
-			eventURL = part
-		} else {
-			eventURL = path.Join(eventURL, part)
-		}
+	// Parse the dashboard URL
+	baseURL, err := url.Parse(config.dashboard)
+	if err != nil {
+		return fmt.Errorf("failed to parse dashboard URL: %v", err)
 	}
+
+	// Create the path by joining the parts
+	pathParts := []string{namespace, "events", entity, checkName}
+	baseURL.Path = path.Join(baseURL.Path, strings.Join(pathParts, "/"))
+
+	// Get the final URL
+	eventURL := baseURL.String()
 
 	// Format the message text with fixed width status and a link to the event
 	messageText := fmt.Sprintf("*`%-8s`* <%s|%s/%s>", statusStr, eventURL, entity, checkName)

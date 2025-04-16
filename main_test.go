@@ -109,6 +109,10 @@ func TestExecuteHandler(t *testing.T) {
 		t.Errorf("Expected message to contain WARNING status, got: %s", message.Text)
 	}
 
+	if !strings.Contains(message.Text, config.dashboard) {
+		t.Errorf("Expected message to contain %s status, got: %s", config.dashboard, message.Text)
+	}
+
 	if !strings.Contains(message.Text, "test-host/test-check") {
 		t.Errorf("Expected message to contain entity/check name, got: %s", message.Text)
 	}
