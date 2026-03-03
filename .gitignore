@@ -18,7 +18,17 @@ sensu-simple-google-chat-handler
 # GoReleaser
 dist/
 
-# IDE files
+# IDE
+*.iml
 .idea/
 .vscode/
-*.iml
+
+# macOS
+.DS_Store
+
+# local helper script (do not commit)
+fixgooglehandler.sh
+
+# vendoring (ignore unless you intentionally commit)
+vendor/
+
