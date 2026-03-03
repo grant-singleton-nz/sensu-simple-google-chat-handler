@@ -5,6 +5,8 @@
 *.so
 *.dylib
 sensu-simple-google-chat-handler
+sensu-google-chat-handler
+google-chat-handler
 
 # Test binary, built with `go test -c`
 *.test
