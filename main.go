@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"net/url"
 	"path"
@@ -14,7 +15,7 @@ import (
 	"github.com/sensu/sensu-plugin-sdk/sensu"
 )
 
-// Config represents the handler plugin config.
+// HandlerConfig represents the handler plugin config.
 type HandlerConfig struct {
 	sensu.PluginConfig
 	webhook   string
@@ -75,6 +76,13 @@ func checkArgs(_ *corev2.Event) error {
 	if len(config.webhook) == 0 {
 		return fmt.Errorf("--webhook or GOOGLE_CHAT_WEBHOOK environment variable is required")
 	}
+	webhookURL, err := url.Parse(config.webhook)
+	if err != nil {
+		return fmt.Errorf("invalid webhook URL: %w", err)
+	}
+	if webhookURL.Scheme != "https" {
+		return fmt.Errorf("webhook URL must use HTTPS scheme, got %q", webhookURL.Scheme)
+	}
 	if len(config.dashboard) == 0 {
 		return fmt.Errorf("--dashboard or SENSU_DASHBOARD environment variable is required")
 	}
@@ -99,7 +107,7 @@ func executeHandler(event *corev2.Event) error {
 	// Parse the dashboard URL
 	baseURL, err := url.Parse(config.dashboard)
 	if err != nil {
-		return fmt.Errorf("failed to parse dashboard URL: %v", err)
+		return fmt.Errorf("failed to parse dashboard URL: %w", err)
 	}
 
 	// Create the path by joining the parts
@@ -123,7 +131,7 @@ func executeHandler(event *corev2.Event) error {
 	// Convert the message to JSON
 	messageBytes, err := json.Marshal(message)
 	if err != nil {
-		return fmt.Errorf("failed to marshal JSON: %v", err)
+		return fmt.Errorf("failed to marshal JSON: %w", err)
 	}
 
 	// Send the message to Google Chat
@@ -133,12 +141,16 @@ func executeHandler(event *corev2.Event) error {
 
 	resp, err := client.Post(config.webhook, "application/json", bytes.NewBuffer(messageBytes))
 	if err != nil {
-		return fmt.Errorf("failed to send message to Google Chat: %v", err)
+		return fmt.Errorf("failed to send message to Google Chat: %w", err)
 	}
-	defer resp.Body.Close()
+	defer func() {
+		io.Copy(io.Discard, resp.Body)
+		resp.Body.Close()
+	}()
 
 	if resp.StatusCode >= 400 {
-		return fmt.Errorf("error sending message to Google Chat, got status %d", resp.StatusCode)
+		body, _ := io.ReadAll(io.LimitReader(resp.Body, 512))
+		return fmt.Errorf("Google Chat returned status %d: %s", resp.StatusCode, string(body))
 	}
 
 	return nil

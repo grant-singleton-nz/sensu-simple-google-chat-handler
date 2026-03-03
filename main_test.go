@@ -36,6 +36,24 @@ func TestCheckArgs(t *testing.T) {
 			dashboard:  "",
 			shouldFail: true,
 		},
+		{
+			name:       "HTTP webhook rejected",
+			webhook:    "http://chat.googleapis.com/webhook",
+			dashboard:  "https://sensu.example.com",
+			shouldFail: true,
+		},
+		{
+			name:       "Non-URL webhook rejected",
+			webhook:    "not-a-url",
+			dashboard:  "https://sensu.example.com",
+			shouldFail: true,
+		},
+		{
+			name:       "File scheme webhook rejected",
+			webhook:    "file:///etc/passwd",
+			dashboard:  "https://sensu.example.com",
+			shouldFail: true,
+		},
 	}
 
 	for _, tc := range testCases {
@@ -62,13 +80,18 @@ func TestExecuteHandler(t *testing.T) {
 	// Create a test server to receive the webhook request
 	var receivedRequest []byte
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		body, _ := io.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
+		if err != nil {
+			t.Errorf("Failed to read request body: %v", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 		receivedRequest = body
 		w.WriteHeader(http.StatusOK)
 	}))
 	defer ts.Close()
 
-	// Set up the config config
+	// Set up the config
 	config.webhook = ts.URL
 	config.dashboard = "https://sensu.example.com"
 
@@ -110,7 +133,7 @@ func TestExecuteHandler(t *testing.T) {
 	}
 
 	if !strings.Contains(message.Text, config.dashboard) {
-		t.Errorf("Expected message to contain %s status, got: %s", config.dashboard, message.Text)
+		t.Errorf("Expected message to contain %s, got: %s", config.dashboard, message.Text)
 	}
 
 	if !strings.Contains(message.Text, "test-host/test-check") {
@@ -120,6 +143,103 @@ func TestExecuteHandler(t *testing.T) {
 	// Verify the thread
 	if message.Thread.ThreadKey != "test-host" {
 		t.Errorf("Expected thread key to be test-host, got: %s", message.Thread.ThreadKey)
+	}
+}
+
+func TestExecuteHandlerErrorResponse(t *testing.T) {
+	// Create a test server that returns an error with a body
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(`{"error": "invalid request"}`))
+	}))
+	defer ts.Close()
+
+	config.webhook = ts.URL
+	config.dashboard = "https://sensu.example.com"
+
+	event := &corev2.Event{
+		Entity: &corev2.Entity{
+			ObjectMeta: corev2.ObjectMeta{
+				Name:      "test-entity",
+				Namespace: "default",
+			},
+			System: corev2.System{
+				Hostname: "test-host",
+			},
+		},
+		Check: &corev2.Check{
+			ObjectMeta: corev2.ObjectMeta{
+				Name: "test-check",
+			},
+			Status: 1,
+		},
+	}
+
+	err := executeHandler(event)
+	if err == nil {
+		t.Fatal("Expected error for 400 response but got none")
+	}
+	if !strings.Contains(err.Error(), "400") {
+		t.Errorf("Expected error to contain status code 400, got: %v", err)
+	}
+	if !strings.Contains(err.Error(), "invalid request") {
+		t.Errorf("Expected error to contain response body, got: %v", err)
+	}
+}
+
+func TestExecuteHandlerEntityFallback(t *testing.T) {
+	// Verify that when hostname is empty, entity name is used instead
+	var receivedRequest []byte
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		body, err := io.ReadAll(r.Body)
+		if err != nil {
+			t.Errorf("Failed to read request body: %v", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		receivedRequest = body
+		w.WriteHeader(http.StatusOK)
+	}))
+	defer ts.Close()
+
+	config.webhook = ts.URL
+	config.dashboard = "https://sensu.example.com"
+
+	event := &corev2.Event{
+		Entity: &corev2.Entity{
+			ObjectMeta: corev2.ObjectMeta{
+				Name:      "entity-name-fallback",
+				Namespace: "default",
+			},
+			System: corev2.System{
+				Hostname: "", // empty hostname to trigger fallback
+			},
+		},
+		Check: &corev2.Check{
+			ObjectMeta: corev2.ObjectMeta{
+				Name: "test-check",
+			},
+			Status: 0,
+		},
+	}
+
+	err := executeHandler(event)
+	if err != nil {
+		t.Fatalf("Expected no error but got: %v", err)
+	}
+
+	var message ThreadMessage
+	err = json.Unmarshal(receivedRequest, &message)
+	if err != nil {
+		t.Fatalf("Failed to unmarshal request: %v", err)
+	}
+
+	if !strings.Contains(message.Text, "entity-name-fallback") {
+		t.Errorf("Expected message to use entity name as fallback, got: %s", message.Text)
+	}
+
+	if message.Thread.ThreadKey != "entity-name-fallback" {
+		t.Errorf("Expected thread key to use entity name as fallback, got: %s", message.Thread.ThreadKey)
 	}
 }
 
@@ -159,7 +279,12 @@ func TestStatusString(t *testing.T) {
 			// Set up a test server to capture the webhook payload
 			var receivedRequest []byte
 			ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-				body, _ := io.ReadAll(r.Body)
+				body, err := io.ReadAll(r.Body)
+				if err != nil {
+					t.Errorf("Failed to read request body: %v", err)
+					w.WriteHeader(http.StatusInternalServerError)
+					return
+				}
 				receivedRequest = body
 				w.WriteHeader(http.StatusOK)
 			}))
