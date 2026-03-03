@@ -15,11 +15,12 @@ builds:
 
 archives:
   - id: release-archive
+    name_template: "{{ .ProjectName }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}"
     formats: tar.gz
     files:
       - LICENSE
       - README.md
 
 checksum:
-  name_template: "{{ .ProjectName }}_{{ .Version }}_sha512-checksums.txt"
+  name_template: "{{ .ProjectName }}_v{{ .Version }}_sha512-checksums.txt"
   algorithm: sha512
