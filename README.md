@@ -1,7 +1,7 @@
 # Sensu Google Chat Handler
 
-[![Go Test](https://github.com/jhenderson-pro/google-chat-handler/workflows/test/badge.svg)](https://github.com/jhenderson-pro/google-chat-handler/actions?query=workflow%3A%22test%22)
-[![goreleaser](https://github.com/jhenderson-pro/google-chat-handler/workflows/goreleaser/badge.svg)](https://github.com/jhenderson-pro/google-chat-handler/actions?query=workflow%3Agoreleaser)
+[![Go Test](https://github.com/grant-singleton-nz/sensu-simple-google-chat-handler/workflows/test/badge.svg)](https://github.com/grant-singleton-nz/sensu-simple-google-chat-handler/actions?query=workflow%3A%22test%22)
+[![goreleaser](https://github.com/grant-singleton-nz/sensu-simple-google-chat-handler/workflows/goreleaser/badge.svg)](https://github.com/grant-singleton-nz/sensu-simple-google-chat-handler/actions?query=workflow%3Agoreleaser)
 
 ## Table of Contents
 
@@ -20,8 +20,6 @@
 The Sensu Google Chat Handler is a [Sensu Handler](https://docs.sensu.io/sensu-go/latest/reference/handlers/) that sends notifications to a
 Google Chat space via webhooks. Messages include a link to the event in the Sensu dashboard
 and organize messages by entity in Google Chat threads.
-
-Originally forked from [grant-singleton-nz/sensu-simple-google-chat-handler](https://github.com/grant-singleton-nz/sensu-simple-google-chat-handler).
 
 ## Files
 
@@ -61,10 +59,10 @@ Use "sensu-google-chat-handler [command] --help" for more information about a co
 consider doing so! You can use the following command to add the asset:
 
 ```
-sensuctl asset add jhenderson-pro/google-chat-handler
+sensuctl asset add grant-singleton-nz/sensu-simple-google-chat-handler
 ```
 
-You can also find the asset on the [Bonsai Asset Index](https://bonsai.sensu.io/assets/jhenderson-pro/google-chat-handler).
+You can also find the asset on the [Bonsai Asset Index](https://bonsai.sensu.io/assets/gsingleton/google-chat-handler).
 
 ### Handler definition
 
@@ -79,7 +77,7 @@ spec:
   command: sensu-google-chat-handler --webhook $GOOGLE_CHAT_WEBHOOK --dashboard $SENSU_DASHBOARD
   type: pipe
   runtime_assets:
-    - jhenderson-pro/google-chat-handler
+    - grant-singleton-nz/sensu-simple-google-chat-handler
   secrets:
     - name: GOOGLE_CHAT_WEBHOOK
       secret: google-chat-webhook
@@ -98,13 +96,13 @@ spec:
 
 ### Download
 
-Download the latest version of sensu-google-chat-handler from [releases](https://github.com/jhenderson-pro/google-chat-handler/releases),
+Download the latest version of sensu-google-chat-handler from [releases](https://github.com/grant-singleton-nz/sensu-simple-google-chat-handler/releases),
 or create an executable from this source.
 
 For Linux systems with `go` installed:
 
 ```
-go install github.com/jhenderson-pro/google-chat-handler@latest
+go install github.com/grant-singleton-nz/sensu-simple-google-chat-handler@latest
 ```
 
 ## Contributing
