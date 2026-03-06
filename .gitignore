@@ -5,6 +5,8 @@
 *.so
 *.dylib
 sensu-simple-google-chat-handler
+sensu-google-chat-handler
+google-chat-handler
 
 # Test binary, built with `go test -c`
 *.test
@@ -18,7 +20,17 @@ sensu-simple-google-chat-handler
 # GoReleaser
 dist/
 
-# IDE files
+# IDE
+*.iml
 .idea/
 .vscode/
-*.iml
+
+# macOS
+.DS_Store
+
+# local helper script (do not commit)
+fixgooglehandler.sh
+
+# vendoring (ignore unless you intentionally commit)
+vendor/
+

@@ -1,9 +1,10 @@
 version: 2
+project_name: sensu-google-chat-handler
 builds:
   - env:
       - CGO_ENABLED=0
     main: main.go
-    ldflags: '-s -w -X github.com/sensu-community/sensu-plugin-sdk/version.version={{.Version}} -X github.com/sensu-community/sensu-plugin-sdk/version.commit={{.Commit}} -X github.com/sensu-community/sensu-plugin-sdk/version.date={{.Date}}'
+    ldflags: '-s -w -X github.com/sensu/sensu-plugin-sdk/version.version={{.Version}} -X github.com/sensu/sensu-plugin-sdk/version.commit={{.Commit}} -X github.com/sensu/sensu-plugin-sdk/version.date={{.Date}}'
     binary: bin/{{ .ProjectName }}
     targets:
       - darwin_amd64
@@ -14,11 +15,12 @@ builds:
 
 archives:
   - id: release-archive
+    name_template: "{{ .ProjectName }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}"
     formats: tar.gz
     files:
       - LICENSE
       - README.md
 
 checksum:
-  name_template: "{{ .ProjectName }}_{{ .Version }}_sha512-checksums.txt"
+  name_template: "{{ .ProjectName }}_v{{ .Version }}_sha512-checksums.txt"
   algorithm: sha512
